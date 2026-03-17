@@ -11,20 +11,29 @@ function Card({ card, isFlipped, isMatched, onFlip }) {
     const isOpen = isFlipped || isMatched;
     const IconComponent = card.icon;
 
-    const cardClass = `w-20 h-20 flex items-center justify-center text-3xl rounded-xl cursor-pointer select-none transition-all duration-300 transform
-    ${isOpen ? 'bg-white shadow-md scale-100' : 'bg-gradients-to-br from-purle-500 to-indigo-600 shadow-lg hover:scale-105 hover:shadow-xl'}
-    ${isMatched ? 'opacity-70 ring-2 ring-green-400' : ''}`;
-
     return (
-        <div onClick={handleClick} className={cardClass}>
-            {isOpen ?(
-                <span className="animate-bounce-once">
-                    <IconComponent style={{ color: card.color }} />
-                </span>
-            ) : (
-                <FaQuestion className="text-white/60 text-xl"/>
-            )}
+        <div 
+            onClick={handleClick} 
+            /* Perspektif untuk efek 3D */
+            className="w-20 h-20 cursor-pointer perspective-1000 group"
+        >
+            <div className={`relative w-full h-full transition-all duration-500 transform-style-3d ${isOpen ? 'rotate-y-180' : 'hover:scale-105'}`}>
+                
+                {/* SISI BELAKANG (Saat kartu tertutup) */}
+                <div className="absolute w-full h-full backface-hidden bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl shadow-lg flex items-center justify-center border-2 border-white/20">
+                    <FaQuestion className="text-white/40 text-2xl group-hover:scale-110 transition-transform" />
+                </div>
 
+                {/* SISI DEPAN (Saat kartu terbuka) */}
+                <div className={`absolute w-full h-full backface-hidden rotate-y-180 bg-white rounded-xl shadow-md flex items-center justify-center 
+                    ${isMatched ? 'ring-4 ring-green-400 opacity-80' : 'ring-2 ring-white'}`}>
+                    
+                    <span className={`${isMatched ? 'animate-none' : 'animate-bounce-once'}`}>
+                        <IconComponent style={{ color: card.color }} className="text-4xl" />
+                    </span>
+                </div>
+
+            </div>
         </div>
     );
 }

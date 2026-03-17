@@ -36,3 +36,27 @@ body {
 .animate-bounce-once {
   animation: bounce-once 0.3s ease-out;
 }
+
+/* --- Tambahan untuk Sinkronisasi Card Flip --- */
+
+@layer utilities {
+  /* Memberikan efek kedalaman 3D */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Memastikan sisi depan dan belakang kartu berada di ruang 3D yang sama */
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Menyembunyikan sisi belakang kartu saat diputar */
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  /* Class untuk memutar kartu 180 derajat pada sumbu Y */
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
